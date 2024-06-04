@@ -13,11 +13,11 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Load the transaction data
-file_path = '../mucudu-transactions.csv'
+file_path = 'mucudu-transactions.csv'
 data = pd.read_csv(file_path)
 
 # Load the menu items from JSON file
-menu_file_path = '../menu_jimmy.json'
+menu_file_path = 'menu_jimmy.json'
 with open(menu_file_path, 'r') as file:
     menu_items = json.load(file)
 
