@@ -1,0 +1,7 @@
+Flask
+pandas
+requests
+mlxtend
+scikit-learn
+scipy
+surprise
