@@ -5,3 +5,4 @@ mlxtend
 scikit-learn
 scipy
 surprise
+gunicorn
