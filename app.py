@@ -258,18 +258,22 @@ def get_offers(user_id):
 @app.route('/create_offer/<int:user_id>', methods=['GET'])
 def create_offer(user_id):
     try:
-        # Generate offer text for the given user
         num_offers = int(request.args.get('num_offers', 1))
+        offers_payloads = []
+        
+        # Generate the specified number of offers
         offers, pos_ids_item1, pos_ids_item2 = generate_new_offers(user_id, num_offers)
 
-        # Get the first offer details (for demonstration)
-        if offers:
-            offer_text = offers[0]
-            offer_name = "Generated Offer"
-            payload = write_offer_to_db(user_id, offer_text, offer_name, pos_ids_item1, pos_ids_item2)
-            return jsonify({'payload': json.loads(payload)})
-        else:
-            return jsonify({'error': 'No offers generated'}), 404
+        for i in range(num_offers):
+            if i < len(offers):
+                offer_text = offers[i]
+                offer_name = "Generated Offer"
+                payload = write_offer_to_db(user_id, offer_text, offer_name, pos_ids_item1, pos_ids_item2)
+                offers_payloads.append(json.loads(payload))
+            else:
+                break
+
+        return jsonify({'user_id': user_id, 'offers': offers_payloads})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
