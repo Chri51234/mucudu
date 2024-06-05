@@ -203,21 +203,12 @@ def generate_new_offers(user_id, num_offers=1):
     return offers_to_return, pos_ids_item1, pos_ids_item2
 
 def write_offer_to_db(user_id, offer_text, offer_name, pos_ids_item1, pos_ids_item2):
-    url = 'https://x70r-x0ih-64gn.a2.xano.io/api:-y2Lnfgt:dev/offer/backend/new'
-    
-    # Extract posId from menu_item_posIds dictionary
-    # item_name = next((word for word in offer_text.split() if word in menu_item_posIds), None)
-    # posId = menu_item_posIds.get(item_name, None)
-
-    print(pos_ids_item1)
-    print(pos_ids_item2)
-
     payload = {
         "user_id": user_id,
         "offer": offer_text,
         "created_at": datetime.now().isoformat(),
         "details": offer_text,
-        "venues_id": 0,  # 174 for Jimmy's
+        "venues_id": 174,  # 174 for Jimmy's
         "image": None,
         "offer_image": "https://423c2ec2ec37482009eff6626a7be741.cdn.bubble.io/f1717049342102x805180131643686700/Mucudu%20Half%20Page%20Ad%20.png",
         "expiry": (datetime.now() + pd.DateOffset(days=30)).isoformat(),
@@ -238,7 +229,7 @@ def write_offer_to_db(user_id, offer_text, offer_name, pos_ids_item1, pos_ids_it
         "validTimeStart": datetime.now().isoformat(),
         "validTimeEnd": (datetime.now() + pd.DateOffset(hours=24)).isoformat(),
         "validDays": [1, 2, 3, 4, 5, 6, 7],
-        "active": False,
+        "active": True,
         "maxReward": 0,
         "pricePoint": 0,
         "qual_type": "Time spent in the bar",
@@ -253,16 +244,9 @@ def write_offer_to_db(user_id, offer_text, offer_name, pos_ids_item1, pos_ids_it
         "location": None
     }
 
-    headers = {'Content-Type': 'application/json'}
-    response = requests.post(url, json=payload, headers=headers)
-    if response.status_code != 200:
-        print(f"response.status_code: {response.status_code}")
-        print(f"Failed to create offer: {response.text}")
-    else:
-        print(f"response.status_code: {response.status_code}")
-        print(f"Offer created successfully: {response.text}")
-
-@app.route('/offers/<int:user_id>', methods=['GET'])
+    return json.dumps(payload, indent=4)
+    
+@app.route('/offers/int:user_id', methods=['GET'])
 def get_offers(user_id):
     try:
         num_offers = int(request.args.get('num_offers', 3))
@@ -270,6 +254,25 @@ def get_offers(user_id):
         return jsonify({'user_id': user_id, 'offers': offers})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/create_offer/<int:user_id>', methods=['GET'])
+def create_offer(user_id):
+    try:
+        # Generate offer text for the given user
+        num_offers = int(request.args.get('num_offers', 1))
+        offers, pos_ids_item1, pos_ids_item2 = generate_new_offers(user_id, num_offers)
+
+        # Get the first offer details (for demonstration)
+        if offers:
+            offer_text = offers[0]
+            offer_name = "Generated Offer"
+            payload = write_offer_to_db(user_id, offer_text, offer_name, pos_ids_item1, pos_ids_item2)
+            return jsonify({'payload': json.loads(payload)})
+        else:
+            return jsonify({'error': 'No offers generated'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
