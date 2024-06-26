@@ -22,7 +22,7 @@ This Python Flask application uses machine learning and rule mining to generate 
 To get started with this application, clone this repository and install the required dependencies.
 
 ```bash
-git clone [URL]
+git clone https://github.com/Chri51234/mucudu.git
 cd [repository-name]
 pip install -r requirements.txt
 ```
