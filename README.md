@@ -1,13 +1,7 @@
-The python api is hosted on render.com
-
-If you hit the endpoint and pass in the user_id, the number of offers you want generated and the venue_id you will get your response
-
-https://mucudu-usergenoffers4jun.onrender.com//create_offer/9665?num_offers=3&venue_id=174
-
 # Personalized Offer Generator
 
 ## Overview
-This Python Flask application uses machine learning and rule mining to generate personalized offers for users based on their past transaction data. The application performs clustering, association rule mining, and collaborative filtering to recommend highly personalized discounts and offers.
+This Python Flask application uses machine learning and rule mining to generate personalized offers for users based on their past transaction data. The application performs clustering, association rule mining, and collaborative filtering to recommend highly personalized discounts and offers. The python api is hosted on render.com
 
 ## Features
 - **Data Processing**: Converts transaction data from CSV and menu items from JSON for analysis.
@@ -51,7 +45,7 @@ python app.py
 
 ### Example Request
 ```bash
-curl http://localhost:5000/offers/1?num_offers=2
+https://mucudu-usergenoffers4jun.onrender.com//create_offer/9665?num_offers=3&venue_id=174
 ```
 
 
