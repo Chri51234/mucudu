@@ -25,5 +25,3 @@ To get started with this application, clone this repository and install the requ
 git clone [URL]
 cd [repository-name]
 pip install -r requirements.txt
-
-
