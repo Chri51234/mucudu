@@ -25,3 +25,38 @@ To get started with this application, clone this repository and install the requ
 git clone [URL]
 cd [repository-name]
 pip install -r requirements.txt
+```
+
+## Configuration
+Ensure that the following files are correctly placed in the project directory:
+- `mucudu-transactions.csv`: Transaction data file.
+- `menu_jimmy.json`: JSON file containing menu items.
+
+## Usage
+
+Start the Flask application by running:
+
+```bash
+python app.py
+```
+
+
+### API Endpoints
+- **GET /offers/<user_id>**: Fetches personalized offers for a specified user ID.
+  - Parameters:
+    - `num_offers`: Number of offers to generate (default is 3).
+- **GET /create_offer/<user_id>**: Creates and stores offers for a specified user ID.
+  - Parameters:
+    - `num_offers`: Number of offers to generate (default is 1).
+
+### Example Request
+```bash
+curl http://localhost:5000/offers/1?num_offers=2
+```
+
+
+## Contributing
+Contributions to this project are welcome! Please fork the repository and submit pull requests with any enhancements or bug fixes.
+
+
+
